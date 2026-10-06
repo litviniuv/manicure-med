@@ -1,0 +1,72 @@
+/* Variant 2 · prompt 1 «Headline melts, work remains»: the studio hall stays the page background,
+   headline dissolves on scroll, light panels enter from the left. */
+body.v2 { background: #1a2160; }
+.v2-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+.v2-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.v2-bg::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(13,18,66,.78) 0%, rgba(13,18,66,.48) 42%, rgba(13,18,66,.12) 78%, rgba(13,18,66,.05) 100%); }
+@media (max-width: 767px) {
+  .v2-bg img { object-position: 62% 50%; }
+  .v2-bg::after { background: linear-gradient(180deg, rgba(13,18,66,.30) 0%, rgba(13,18,66,.72) 55%, rgba(13,18,66,.82) 100%); }
+}
+.v2-progress { position: fixed; left: 0; right: 0; top: var(--chrome-h); height: 3px; z-index: 40; pointer-events: none; transition: opacity .3s; }
+.v2-progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--lilac), #fff); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.v2-progress.is-done { opacity: 0; }
+
+/* hero: a tall scroll track with a sticky stage */
+.melt { position: relative; height: 230vh; height: 230svh; }
+.melt-stage { position: sticky; top: var(--chrome-h); height: calc(100vh - var(--chrome-h)); height: calc(100svh - var(--chrome-h)); overflow: hidden; display: flex; align-items: center; }
+.melt-inner { position: relative; height: 100%; display: flex; align-items: center; }
+.melt-head { color: #fff; max-width: 820px; will-change: opacity, filter, transform;
+  opacity: calc(1 - var(--h, 0)); filter: blur(calc(var(--h, 0) * 14px)); transform: translateY(calc(var(--h, 0) * -40px)); }
+.melt-head .hero-brow { color: rgba(255,255,255,.82); }
+.melt-head h1 { font-size: clamp(2.4rem, 10.5vw, 5.6rem); letter-spacing: -.04em; line-height: 1.02; text-shadow: 0 6px 40px rgba(8,12,50,.45); max-width: 12ch; }
+.melt-line { font-size: clamp(1rem, 2.6vw, 1.25rem); color: rgba(255,255,255,.9); max-width: 34rem; }
+.melt-hint { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-size: .78rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.melt-hint::after { content: ""; width: 1px; height: 34px; background: linear-gradient(#fff, transparent); animation: hint 1.8s ease-in-out infinite; }
+@keyframes hint { 0%, 100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(6px); opacity: 1; } }
+
+.melt-panel { position: absolute; left: 20px; right: 20px; top: 50%; margin: 0; background: rgba(255,255,255,.96); color: var(--ink); border-radius: 26px; box-shadow: 0 30px 80px -30px rgba(8,12,50,.6);
+  padding: 14px; display: grid; grid-template-columns: 112px 1fr; gap: 14px; align-items: start;
+  opacity: var(--q, 0); transform: translate(calc((1 - var(--q, 0)) * -115%), -50%); visibility: visible; }
+.melt-panel img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 16px; }
+.melt-panel-text p { margin: 0 0 10px; font-size: .92rem; color: var(--ink-soft); }
+.melt-panel-text .melt-who { color: var(--ink); font-weight: 700; }
+.melt-panel .btn-block { grid-column: 1 / -1; }
+.melt-panel-text { display: contents; }
+.melt-panel-text p:first-child { grid-column: 2; grid-row: 1; }
+.melt-panel-text .melt-who { grid-column: 1 / -1; margin: 0; }
+.melt-sub { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.melt-sub .btn { padding: 8px 10px; font-size: .86rem; }
+@media (max-width: 359px) { .melt-panel { grid-template-columns: 88px 1fr; } .melt-sub { grid-template-columns: 1fr; } }
+@media (min-width: 768px) {
+  .melt-panel { left: 32px; right: auto; width: 440px; grid-template-columns: 1fr; padding: 22px; }
+  .melt-panel img { width: 62%; margin: 0 auto 4px; }
+  .melt-panel-text { display: block; }
+  .melt-panel-text p { font-size: .98rem; }
+  .melt-panel-text .melt-who { margin: 0 0 14px; }
+  .melt-sub { margin-top: 8px; }
+}
+@media (min-width: 768px) and (max-height: 820px) { .melt-panel img { width: 42%; } }
+
+/* JS off or reduced motion: no scroll track, both pieces visible in final state */
+html:not(.js) .melt, .reduce .melt { height: auto; }
+html:not(.js) .melt-stage, .reduce .melt-stage { position: relative; top: 0; height: auto; display: block; padding: 48px 0; }
+html:not(.js) .melt-inner, .reduce .melt-inner { flex-direction: column; align-items: stretch; gap: 28px; height: auto; }
+html:not(.js) .melt-head, .reduce .melt-head { opacity: 1; filter: none; transform: none; }
+html:not(.js) .melt-panel, .reduce .melt-panel { position: relative; left: 0; right: 0; top: 0; opacity: 1; transform: none; }
+html:not(.js) .melt-hint, .reduce .melt-hint, html:not(.js) .v2-progress, .reduce .v2-progress { display: none; }
+
+/* sections: light panels on top of the same photo */
+.v2 .section { padding: 28px 0; }
+.v2 .section:first-of-type { padding-top: 56px; }
+.v2 .panel { max-width: calc(var(--container) - 24px); width: calc(100% - 24px); background: rgba(255,255,255,.95); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-radius: 28px; padding-top: 36px; padding-bottom: 36px; box-shadow: 0 30px 80px -40px rgba(8,12,50,.7); }
+.js .v2 .panel { opacity: 0; transform: translateX(-70px); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+.js .v2 .panel.is-in { opacity: 1; transform: none; }
+.v2 .panel .reveal { opacity: 1; transform: none; }
+@media (min-width: 960px) { .v2 .section { padding: 40px 0; } .v2 .panel { padding: 64px; } }
+.v2 .about-photo { max-width: 380px; }
+.v2 .gallery-grid { gap: 8px; }
+.v2 .services-foot { background: var(--cobalt); }
+.v2 .site-footer { background: rgba(13,18,66,.92); margin-top: 40px; }
+@media (prefers-reduced-motion: reduce) { .js .v2 .panel { opacity: 1; transform: none; } }
