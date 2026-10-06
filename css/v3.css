@@ -12,7 +12,7 @@ body.v3 { background: #eef0fb; color: #f3f4ff; --accent: #c4bcff; --accent-ink: 
 .v3.is-scrolled .v3-bg::after { background: linear-gradient(180deg, rgba(9,12,46,.62) 0%, rgba(9,12,46,.78) 50%, rgba(9,12,46,.9) 100%); }
 .v3-bg::after { transition: background .6s; }
 @media (prefers-reduced-motion: no-preference) {
-  .js .v3-bg { clip-path: circle(0% at 50% 48%); animation: v3circle 1.5s cubic-bezier(.65,0,.25,1) .25s forwards; }
+  .js .v3-bg { clip-path: circle(0% at 50% 48%); animation: v3circle .9s cubic-bezier(.65,0,.25,1) .08s forwards; }
 }
 @keyframes v3circle { to { clip-path: circle(150% at 50% 48%); } }
 
@@ -55,8 +55,8 @@ body.v3 { background: #eef0fb; color: #f3f4ff; --accent: #c4bcff; --accent-ink: 
 @media (max-width: 559px) { .giant-word > span { display: block; } .giant-inner { padding-top: 4vh; } }
 @media (min-width: 960px) { .giant-word { font-size: clamp(6rem, 15vw, 15rem); } }
 @media (prefers-reduced-motion: no-preference) {
-  .js .gw-t, .js .gw::after { animation: v3kern 1.6s cubic-bezier(.2,.7,.2,1) .7s both; }
-  .js .giant-sub, .js .giant-foot { animation: v3up 1s ease 1.4s both; }
+  .js .gw-t, .js .gw::after { animation: v3kern 1s cubic-bezier(.2,.7,.2,1) .3s both; }
+  .js .giant-sub, .js .giant-foot { animation: v3up .7s ease .75s both; }
 }
 @keyframes v3kern { from { letter-spacing: .32em; opacity: 0; filter: blur(10px); } to { letter-spacing: -.015em; opacity: 1; filter: blur(0); } }
 @keyframes v3up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
